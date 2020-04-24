@@ -2,11 +2,12 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>播放器</title>
     <!-- 样式 -->
-    <link rel="stylesheet" type="text/css" href="/music/musicPlayer.css">
+    <link rel="stylesheet" type="text/css" href="./musicPlayer.css">
 </head>
 
 <body>
@@ -63,12 +64,12 @@
 
             <!-- 底部播放器 -->
             <div class="audio_con">
-                <audio ref='audio' @play="play" @pause="pause" :src="musicUrl" controls autoplay loop
-                    class="myaudio" id="audio"></audio>
+                <audio ref='audio' @play="play" @pause="pause" :src="musicUrl" controls autoplay loop class="myaudio"
+                    id="audio"></audio>
             </div>
 
             <div class="video_con" v-show="isShow" style="display: none;">
-                <video id="mvVideo" :src="mvUrl" controls="controls" autoplay="autoplay" ></video>
+                <video id="mvVideo" :src="mvUrl" controls="controls" autoplay="autoplay"></video>
                 <div class="mask" @click="hide"></div>
             </div>
         </div>
