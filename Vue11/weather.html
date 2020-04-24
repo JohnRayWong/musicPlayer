@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+     <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<style>
+    .titleDiv{
+        width: 100%;
+        text-align: center;
+    }
+
+    .title{
+        font-size: 60px;
+        font-weight: bold;
+        color: aquamarine;
+    }
+
+    .cityInput{
+        height: 25px;
+        width: 150px;
+    }
+
+    .hotKey ul{
+        overflow:hidden;
+        
+    }
+    .hotKey li{
+        float: left;
+        display: inline;
+    }
+
+    .weatherListDiv{     
+        text-align: center;
+    }
+
+    .weatherListDiv ul{
+        display: inline-block;
+        overflow:hidden;
+        margin: 0 auto;
+        width: 830;
+    }
+    .weatherListDiv li{
+        float: left;
+        display: inline;
+        text-align: center;
+        margin-right: 20px;
+        width: 150px;
+    }
+</style>
+
+<div id="app">
+    <div class="titleDiv">
+        <label class="title">天知道</label>
+        <br>
+        <input class="cityInput" type="text" v-model="city">
+        <button @click="getWeather">搜索</button>
+    </div>
+   
+
+<div class="hotKey">
+    <ul >
+        <li v-for="(city,index) in hotCityList" @click="hotCityClick(city)">&nbsp;{{city}} &nbsp; </li>
+    </ul>
+</div>
+
+<div class="weatherListDiv">
+    <ul>
+        <li v-for="(weather,index) in weatherList">
+            <label>{{weather.type}}</label>
+            <br>
+            <label>{{weather.date}}</label>
+            <br>
+            <label>{{weather.fengxiang}}</label>
+            <br>
+            <label>{{weather.fengli}}</label>
+            <br>
+            <label>{{weather.low}} &nbsp; {{weather.high}}</label>
+        </li>
+    </ul>
+</div>
+
+</div>
+
+<script>
+    var app = new Vue({
+        el : "#app",
+        data : {
+            city : "",
+            hotCityList : [
+                "北京",
+                "上海",
+                "广州",
+                "深圳",
+            ],
+            weatherList : [],
+        },
+        methods : {
+            
+            getWeather :function(){
+                var that = this;
+                axios.get("http://wthrcdn.etouch.cn/weather_mini?city=" + this.city)
+                .then(res => {
+                    console.log(res);
+                    that.weatherList = res.data.data.forecast;
+                })
+                .catch(err => {
+                    console.error(err); 
+                })
+            },
+            hotCityClick : function(city){
+                this.city = city;
+                this.getWeather();
+            }
+        },
+    })
+</script>
+
+</body>
+</html>

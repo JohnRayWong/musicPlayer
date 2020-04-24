@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+    
+<body>
+    <style>
+     
+    </style>
+
+    <div id="app">
+        <input placeholder="输入" v-model="text" @keyup.enter="addText">
+    
+        <ul>
+            <li class="textli" v-for="(item,index) in textArr" @mouseover="hoverIndex = index"
+            @mouseout="hoverIndex = -1">
+                <span>{{index + 1}}</span>
+                <label>{{item}}</label>
+                <button v-show="hoverIndex == index" @click="deleteText(index)">X</button>
+            </li>
+        </ul>
+    
+        <br>
+        <div v-show="textArr.length > 0">
+            <label>目前有{{textArr.length}}条记事</label>
+            <button @click="clear">清空</button>
+        </div>
+    </div>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<script>
+    var app = new Vue({
+        el : "#app",
+        data :{
+            text : "",
+            textArr :[
+                "吃饭",
+                "睡觉",
+                "粑粑",
+            ],
+            hoverIndex : -1,
+        },
+        methods:{
+            addText : function(){
+                this.textArr.push(this.text);
+                this.text = '';
+            },
+            clear : function(){
+                this.textArr.splice(0,this.textArr.length);
+            },
+            deleteText : function(index){
+                this.textArr.splice(index,1);
+            },
+           
+        }
+    })
+  
+</script>
+</body>
+</html>

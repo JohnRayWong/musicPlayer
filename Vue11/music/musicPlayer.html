@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>播放器</title>
+    <!-- 样式 -->
+    <link rel="stylesheet" type="text/css" href="/music/musicPlayer.css">
+</head>
+
+<body>
+
+    <div class="wrap">
+        <div class="player_wrap">
+            <!-- 播放器头部 -->
+            <div class="player_header">
+                <img src="../music/image/player_title.png" class="titleImg">
+                <input class="searchInput" placeholder="输入喜欢的歌曲或者歌星名字" @keyup.enter="searchSong" v-model="searchText">
+            </div>
+
+            <div class="songContentDiv">
+                <!-- 左侧歌曲列表 -->
+                <div class="songListDiv">
+                    <ul class="song_list">
+                        <li v-for="(song,index) in songsList">
+                            <a href="javascript:;" @click="playSong(song.id)"></a>
+                            <b> {{song.name}}</b>
+                            <span>
+                                <i @click="playMV(song.mvid)" v-show="song.mvid!=0"></i>
+                            </span>
+                        </li>
+                    </ul>
+
+                </div>
+
+                <img class="line1" src="../music/image/line.png">
+                <!-- 中间播放 -->
+                <div class="player_con" :class="{playing:isPlaying}">
+                    <img class="player_bar" src="../music/image/player_bar.png">
+                    <img class="disc autoRotate" src="../music/image/disc.png">
+                    <img class="cover autoRotate" :src="musicCover==''?'./image/cover.png':musicCover">
+                </div>
+
+                <img class="line2" src="../music/image/line.png">
+                <!-- 评论界面 -->
+                <div class="comment">
+                    <ul class="commentList">
+                        <li v-for="(comment,index) in hotComments">
+                            <div class="commentAvatarDiv">
+                                <img :src="comment.user.avatarUrl" class="commmentAvatar">
+                                <label class="commentNickName">{{comment.user.nickname}}</label>
+                            </div>
+
+                            <div class="commentContentDiv">
+                                <label class="commentContent">{{comment.content}}</label>
+                            </div>
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 底部播放器 -->
+            <div class="audio_con">
+                <audio ref='audio' @play="play" @pause="pause" :src="musicUrl" controls autoplay loop
+                    class="myaudio" id="audio"></audio>
+            </div>
+
+            <div class="video_con" v-show="isShow" style="display: none;">
+                <video id="mvVideo" :src="mvUrl" controls="controls" autoplay="autoplay" ></video>
+                <div class="mask" @click="hide"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- 官网提供的 axios 在线地址 -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./musicPlayer.js"></script>
+
+
+</body>
+
+</html>
